@@ -1,0 +1,52 @@
+.custom-table {
+    border: none;
+}
+
+.custom-table thead th {
+    background-color: #fff9c4;
+    border-bottom: none;
+}
+
+.custom-table th,
+.custom-table td {
+    border-bottom: 1px solid #ddd;
+
+}
+
+.table-title {
+    background-color: white;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 15px 15px 0 0;
+    /* Borde superior redondeado */
+    width: 100%;
+}
+
+
+
+
+
+
+.btn-create:hover {
+    background-color: #5a52e0;
+}
+
+.table-wrapper {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.table-header-row {
+    border-bottom: none;
+}
+
+.table-header-row th {
+    border-bottom: none;
+}
+
+.d-flex {
+    flex: 1;
+    justify-content: center;
+    /* Centrar el boton */
+}

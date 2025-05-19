@@ -1,0 +1,114 @@
+.custom-table {
+    border: none;
+}
+
+
+.custom-table thead th {
+    background-color: #fff9c4;
+    border-bottom: none;
+}
+
+.custom-table th,
+.custom-table td {
+    border-bottom: 1px solid #ddd;
+
+}
+
+.table-title {
+    background-color: white;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 15px 15px 0 0;
+    width: 100%;
+}
+
+
+.btn-create:hover {
+    background-color: #5a52e0;
+}
+
+.table-wrapper {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.table-header-row {
+    border-bottom: none;
+}
+
+.table-header-row th {
+    border-bottom: none;
+}
+
+.d-flex {
+    flex: 1;
+    justify-content: center;
+    /* Centrar el boton */
+}
+
+.input-precioProducto {
+    max-width: 160px;
+}
+
+.input-cantidadProducto {
+    max-width: 160px;
+}
+
+.input-stockProducto {
+    max-width: 160px;
+}
+
+
+.gap-x {
+    gap: 20px;
+
+}
+
+body {
+    padding-top: 50px;
+}
+
+
+
+
+.dropdown-menu {
+    cursor: pointer;
+    border: 1px solid #ced4da;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item:hover {
+    background-color: #908dc7;
+    color: white;
+}
+
+
+
+
+
+.dropdown-item {
+    padding: 8px 16px;
+    white-space: nowrap;
+    /* Evita saltos de línea */
+}
+
+
+
+
+/* Asegura que el input tenga espacio debajo */
+.input-codigo {
+    margin-bottom: 2px;
+}
+
+/* Estilo para las sugerencias */
+.dropdown-menu {
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    font-size: 14px;
+}
