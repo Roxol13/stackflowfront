@@ -93,7 +93,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route        >
+        <Route
+          path="/"
+          element={isAuthenticated ? <Layout /> : <Login onLoginSuccess={handleLoginSuccess} />}
+        >
           <Route index element={<HomePage />} />
         </Route>
 
