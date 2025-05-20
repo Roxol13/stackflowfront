@@ -23,7 +23,7 @@ const CreateUser = () => {
             rol
         };//holaa
 
-        const response = await fetch('https://stackflowbackend.onrender.com/createUser', {
+        const response = await fetch('https://stackflowbackend.onrender.com/api/createUser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
