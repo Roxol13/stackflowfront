@@ -31,6 +31,7 @@ const CreateUser = () => {
             body: JSON.stringify(usuario),
         });
 
+
         if (response.ok) {
             Swal.fire({
                 title: 'Registro exitoso',
