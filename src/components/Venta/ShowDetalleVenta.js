@@ -20,7 +20,7 @@ const ShowDetalleVenta = () => {
     const fetchDetallesVenta = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/detalleventa/listar"
+          "https://stackflowbackend.onrender.com/detalleventa/listar"
         );
         const ventasOrdenadas = response.data.sort(
           (a, b) => new Date(b.fecha) - new Date(a.fecha)
