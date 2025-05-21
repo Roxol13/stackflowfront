@@ -14,7 +14,7 @@ const ShowVentas = () => {
   useEffect(() => {
     const fetchVentas = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/ventas/listar");
+        const response = await axios.get("https://stackflowbackend.onrender.com/ventas/listar");
 
         const ventasOrdenadas = response.data.sort(
           (a, b) => new Date(b.fecha) - new Date(a.fecha)

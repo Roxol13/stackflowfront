@@ -9,7 +9,7 @@ import Stack from "@mui/material/Stack";
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-const url = "http://localhost:8080/api/productos";
+const url = "https://stackflowbackend.onrender.com/api/productos";
 
 const ShowProducto = () => {
   const theme = useTheme();
@@ -71,7 +71,7 @@ const ShowProducto = () => {
   };
 
   const getProveedores = async () => {
-    const respuesta = await axios.get("http://localhost:8080/api/proveedores");
+    const respuesta = await axios.get("https://stackflowbackend.onrender.com/api/proveedores");
     setProveedores(respuesta.data);
   };
 

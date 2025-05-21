@@ -22,7 +22,7 @@ const EditProducto = ({
         const fetchProveedores = async () => {
             try {
                 setLoading(true);
-                const respuesta = await axios.get('http://localhost:8080/api/proveedores');
+                const respuesta = await axios.get('https://stackflowbackend.onrender.com/api/proveedores');
                 setProveedores(respuesta.data);
             } catch (error) {
                 console.error('Error fetching proveedores:', error);

@@ -82,7 +82,7 @@ function FormularioPrediccion() {
 
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:8080/api/predecir', form);
+      const response = await axios.post('https://stackflowbackend.onrender.com/api/predecir', form);
       setResultado(response.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error al procesar la predicción");
