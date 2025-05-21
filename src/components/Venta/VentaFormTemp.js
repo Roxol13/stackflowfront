@@ -75,7 +75,7 @@ const VentaFormTemp = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/api/clientes/dni/nombre/${codigoCliente}`);
+      const response = await fetch(`https://stackflowbackend.onrender.com/api/clientes/dni/nombre/${codigoCliente}`);
       if (response.ok) {
         const cliente = await response.json();
         setNombreCliente(cliente.nombre);

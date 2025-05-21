@@ -9,7 +9,7 @@ import Stack from "@mui/material/Stack";
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
-const url = "http://localhost:8080/api/productos";
+const url = "https://stackflowbackend.onrender.com/api/productos";
 
 const ShowProducto = () => {
   const theme = useTheme();
