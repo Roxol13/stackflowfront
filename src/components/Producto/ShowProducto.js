@@ -71,7 +71,7 @@ const ShowProducto = () => {
   };
 
   const getProveedores = async () => {
-    const respuesta = await axios.get("http://localhost:8080/api/proveedores");
+    const respuesta = await axios.get("https://stackflowbackend.onrender.com/api/proveedores");
     setProveedores(respuesta.data);
   };
 

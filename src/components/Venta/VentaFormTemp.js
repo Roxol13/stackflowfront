@@ -99,7 +99,7 @@ const VentaFormTemp = () => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:8080/api/productos/buscar?nombre=${encodeURIComponent(nombre)}`);
+      const response = await fetch(`https://stackflowbackend.onrender.com/api/productos/buscar?nombre=${encodeURIComponent(nombre)}`);
       if (response.ok) {
         const data = await response.json();
         setProductosEncontrados(data);
@@ -305,7 +305,7 @@ const VentaFormTemp = () => {
         }))
       };
 
-      const response = await fetch('http://localhost:8080/ventas/guardar', {
+      const response = await fetch('https://stackflowbackend.onrender.com/ventas/guardar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(ventaDataConEvaluacion)
