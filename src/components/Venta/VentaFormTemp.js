@@ -330,7 +330,7 @@ const VentaFormTemp = () => {
           buscarProductosAlEscribir(nombreProductoBusqueda);
         }
       } else {
-        mostrarAlerta('Error al generar la venta.', 'error');
+        mostrarAlerta('Error al generar al buscar producto.', 'error');
       }
     } catch (error) {
       console.log('Error al generar la venta:', error);
