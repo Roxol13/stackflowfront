@@ -32,7 +32,7 @@ const ShowProducto = () => {
 
   // Paginacion
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = isSmallScreen ? 10 : 10;
+  const itemsPerPage = isSmallScreen ? 5 : 10; // Menos items en móviles
 
   useEffect(() => {
     getProductos();
@@ -172,62 +172,65 @@ const ShowProducto = () => {
   );
 
   return (
-    <div className="container-fluid show-producto-container mt-5 mt-md-5 px-2 px-md-4">
+    <div className="container-fluid show-producto-container mt-3 mt-sm-5 px-3 px-sm-4 px-md-5">
       <div className="table-wrapper">
-        <div className="table-title d-flex justify-content-start align-items-center">
-            <h3 className="m-0 ">Tabla de Productos</h3>
-            <button
-              className="btn btn-create ms-5"
-              onClick={() => openModal()}
-              style={{
-                backgroundColor: "#3f2569",
-                color: "white",
-                padding: "8px 18px",
-                fontSize: "14px",
-                borderRadius: "22px",
-                width: isSmallScreen ? "100%" : "auto"
-              }}
-            >
-              Añadir Producto
-            </button>
-            <div className="mb-3 ms-1" style={{ flexGrow: 1 }}></div>
-          <div
-            className="input-group"
-            style={{ width: "400px", marginLeft: "20px" }}
+        <div className={`table-title d-flex ${isSmallScreen ? 'flex-column align-items-start gap-3' : 'justify-content-start align-items-center'}`}>
+          <h3 className="m-0">Tabla de Productos</h3>
+          
+          <button
+            className={`btn btn-create ${isSmallScreen ? 'w-100' : 'ms-5'}`}
+            onClick={() => openModal()}
+            style={{
+              backgroundColor: "#3f2569",
+              color: "white",
+              padding: "8px 18px",
+              fontSize: isSmallScreen ? "0.9rem" : "0.875rem",
+              borderRadius: "22px",
+            }}
           >
-            <input
-              type="text"
-              placeholder="Buscar..."
-              className="form-control"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+            Añadir Producto
+          </button>
+
+          <div className={`search-container ${isSmallScreen ? 'w-100 mt-2' : 'ms-3'}`}>
+            <div 
+              className="input-group"
               style={{
-                borderRadius: "25px",
-                color: "black",
-                border: "1px solid #6c757d",
-                paddingRight: "40px",
-              }}
-            />
-            <span
-              className="input-group-text"
-              style={{
-                borderRadius: "25px",
-                border: "none",
-                backgroundColor: "white",
-                position: "absolute",
-                right: "10px",
-                top: "50%",
-                transform: "translateY(-50%)",
+                width: isSmallScreen ? "100%" : "350px",
               }}
             >
-
+              <input
+                type="text"
+                placeholder="Buscar..."
+                className="form-control"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{
+                  borderRadius: "25px",
+                  color: "black",
+                  border: "1px solid #6c757d",
+                  paddingRight: "40px",
+                  fontSize: isSmallScreen ? "0.9rem" : "1rem"
+                }}
+              />
+              <span
+                className="input-group-text"
+                style={{
+                  borderRadius: "25px",
+                  border: "none",
+                  backgroundColor: "white",
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                }}
+              >
                 <i className="bi bi-search"></i>
               </span>
             </div>
-          
+          </div>
         </div>
         
-        <div className="table-responsive" style={{ overflowX: "auto" }}>
+        <div className="table-responsive mt-3" style={{ overflowX: "auto" }}>
           <table className="table mb-0 custom-table">
             <thead>
               <tr className="table-header-row">
@@ -256,18 +259,28 @@ const ShowProducto = () => {
                     </td>
                   )}
                   <td>
-                    <div className="d-flex gap-1">
+                    <div className="d-flex gap-2">
                       <button
                         className="btn btn-outline-primary btn-sm"
                         onClick={() => openModal(producto, true)}
-                        style={{ minWidth: "30px" }}
+                        style={{ 
+                          minWidth: isSmallScreen ? "36px" : "30px",
+                          padding: isSmallScreen ? "0.5rem" : "0.25rem",
+                          fontSize: isSmallScreen ? "1rem" : "0.875rem"
+                        }}
+                        title="Editar"
                       >
                         <i className="bi bi-pencil"></i>
                       </button>
                       <button
                         className="btn btn-outline-danger btn-sm"
                         onClick={() => deleteProducto(producto.id)}
-                        style={{ minWidth: "30px" }}
+                        style={{ 
+                          minWidth: isSmallScreen ? "36px" : "30px",
+                          padding: isSmallScreen ? "0.5rem" : "0.25rem",
+                          fontSize: isSmallScreen ? "1rem" : "0.875rem"
+                        }}
+                        title="Eliminar"
                       >
                         <i className="bi bi-trash"></i>
                       </button>
@@ -289,6 +302,7 @@ const ShowProducto = () => {
                 color="secondary"
                 shape="rounded"
                 size={isSmallScreen ? "small" : "medium"}
+                siblingCount={isSmallScreen ? 0 : 1}
               />
             </Stack>
           </div>
@@ -312,14 +326,17 @@ const ShowProducto = () => {
           autoHideDuration={3000}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           sx={{
-            marginTop: isSmallScreen ? "20%" : "5%",
+            marginTop: isSmallScreen ? "15%" : "5%",
           }}
           onClose={() => setOpenSnackbar(false)}
         >
           <Alert
             onClose={() => setOpenSnackbar(false)}
             severity={snackbarSeverity}
-            sx={{ width: isSmallScreen ? "90%" : "auto" }}
+            sx={{ 
+              width: isSmallScreen ? "90%" : "auto",
+              fontSize: isSmallScreen ? "0.9rem" : "1rem"
+            }}
           >
             {snackbarMessage}
           </Alert>

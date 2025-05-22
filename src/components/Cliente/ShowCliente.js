@@ -24,14 +24,15 @@ const ShowCliente = ({ userData }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Alertas
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
-  // Paginacion
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [clienteToDelete, setClienteToDelete] = useState(null);
+
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = isSmallScreen ? 10 : 10;
+  const itemsPerPage = isSmallScreen ? 5 : 10;
 
   useEffect(() => {
     getClientes();
@@ -142,15 +143,26 @@ const ShowCliente = ({ userData }) => {
     }
   };
 
-  const deleteCliente = async (id) => {
-    await axios.delete(`${url}/${id}`);
+  const deleteCliente = (clienteId) => {
+    if (userData?.rol !== "Administrador") {
+      setSnackbarMessage("Solo el administrador puede eliminar clientes");
+      setSnackbarSeverity("warning");
+      setOpenSnackbar(true);
+      return;
+    }
+    setClienteToDelete(clienteId);
+    setShowConfirmDelete(true);
+  };
+
+  const handleDeleteConfirmation = async () => {
+    await axios.delete(`${url}/${clienteToDelete}`);
     setSnackbarMessage("Cliente eliminado exitosamente!");
     setSnackbarSeverity("error");
     setOpenSnackbar(true);
     getClientes();
+    setShowConfirmDelete(false);
   };
 
-  // Paginacion
   const totalPages = Math.ceil(filteredClientes.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -160,30 +172,32 @@ const ShowCliente = ({ userData }) => {
   );
 
   return (
-    <div className="container-fluid show-cliente-container mt-5 mt-md-5 px-2 px-md-4">
+    <div className="container-fluid show-cliente-container mt-3 mt-sm-5 px-3 px-sm-4 px-md-5">
       <div className="table-wrapper">
-        <div className="table-title d-flex justify-content-start align-items-center">
-          <h3 className="m-0">Tabla de Clientes</h3>  
-            <button
-              className="btn btn-create ms-5"
-              onClick={() => openModal()}
+        <div className={`table-title d-flex ${isSmallScreen ? 'flex-column align-items-start gap-3' : 'justify-content-start align-items-center'}`}>
+          <h3 className="m-0">Tabla de Clientes</h3>
+          
+          <button
+            className={`btn btn-create ${isSmallScreen ? 'w-100' : 'ms-5'}`}
+            onClick={() => openModal()}
+            style={{
+              backgroundColor: "#3f2569",
+              color: "white",
+              padding: "8px 18px",
+              fontSize: isSmallScreen ? "0.9rem" : "0.875rem",
+              borderRadius: "22px",
+            }}
+          >
+            Añadir Cliente
+          </button>
+
+          <div className={`search-container ${isSmallScreen ? 'w-100 mt-2' : 'ms-3'}`}>
+            <div 
+              className="input-group"
               style={{
-                backgroundColor: "#3f2569",
-                color: "white",
-                padding: "8px 18px",
-                fontSize: "14px",
-                borderRadius: "22px",
-                width: isSmallScreen ? "100%" : "auto"
+                width: isSmallScreen ? "100%" : "350px",
               }}
             >
-              Añadir Cliente
-            </button>
-            
-            <div className="mb-3 ms-1" style={{ flexGrow: 1 }}></div>
-            <div
-            className="input-group"
-            style={{ width: "400px", marginLeft: "20px" }}
-          >
               <input
                 type="text"
                 placeholder="Buscar..."
@@ -195,6 +209,7 @@ const ShowCliente = ({ userData }) => {
                   color: "black",
                   border: "1px solid #6c757d",
                   paddingRight: "40px",
+                  fontSize: isSmallScreen ? "0.9rem" : "1rem"
                 }}
               />
               <span
@@ -212,9 +227,10 @@ const ShowCliente = ({ userData }) => {
                 <i className="bi bi-search"></i>
               </span>
             </div>
+          </div>
         </div>
         
-        <div className="table-responsive" style={{ overflowX: "auto" }}>
+        <div className="table-responsive mt-3" style={{ overflowX: "auto" }}>
           <table className="table mb-0 custom-table">
             <thead>
               <tr className="table-header-row">
@@ -241,37 +257,33 @@ const ShowCliente = ({ userData }) => {
                   {!isSmallScreen && <td>{cliente.direccion}</td>}
                   {!isSmallScreen && <td>{cliente.razon}</td>}
                   <td>
-                    <div className="d-flex gap-1">
+                    <div className="d-flex gap-2">
                       <button
                         className="btn btn-outline-primary btn-sm"
                         onClick={() => openModal(cliente, true)}
-                        style={{ minWidth: "30px" }}
+                        style={{ 
+                          minWidth: isSmallScreen ? "36px" : "30px",
+                          padding: isSmallScreen ? "0.5rem" : "0.25rem",
+                          fontSize: isSmallScreen ? "1rem" : "0.875rem"
+                        }}
+                        title="Editar"
                       >
                         <i className="bi bi-pencil"></i>
                       </button>
                       <button
                         className="btn btn-outline-danger btn-sm"
-                        onClick={() =>
-                          userData?.rol === "Administrador" &&
-                          deleteCliente(cliente.id)
-                        }
-                        disabled={userData?.rol !== "Administrador"}
+                        onClick={() => deleteCliente(cliente.id)}
+                        style={{ 
+                          minWidth: isSmallScreen ? "36px" : "30px",
+                          padding: isSmallScreen ? "0.5rem" : "0.25rem",
+                          fontSize: isSmallScreen ? "1rem" : "0.875rem"
+                        }}
                         title={
                           userData?.rol !== "Administrador"
                             ? "Solo el administrador puede eliminar"
-                            : ""
+                            : "Eliminar"
                         }
-                        style={{
-                          minWidth: "30px",
-                          cursor:
-                            userData?.rol !== "Administrador"
-                              ? "not-allowed"
-                              : "pointer",
-                          opacity: userData?.rol !== "Administrador" ? 0.5 : 1,
-                          borderColor:
-                            userData?.rol !== "Administrador" ? "#ccc" : "",
-                          color: userData?.rol !== "Administrador" ? "#aaa" : "",
-                        }}
+                        disabled={userData?.rol !== "Administrador"}
                       >
                         <i className="bi bi-trash"></i>
                       </button>
@@ -293,6 +305,7 @@ const ShowCliente = ({ userData }) => {
                 color="secondary"
                 shape="rounded"
                 size={isSmallScreen ? "small" : "medium"}
+                siblingCount={isSmallScreen ? 0 : 1}
               />
             </Stack>
           </div>
@@ -315,16 +328,63 @@ const ShowCliente = ({ userData }) => {
           autoHideDuration={3000}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           sx={{
-            marginTop: isSmallScreen ? "20%" : "5%",
+            marginTop: isSmallScreen ? "15%" : "5%",
           }}
           onClose={() => setOpenSnackbar(false)}
         >
           <Alert
             onClose={() => setOpenSnackbar(false)}
             severity={snackbarSeverity}
-            sx={{ width: isSmallScreen ? "90%" : "auto" }}
+            sx={{ 
+              width: isSmallScreen ? "90%" : "auto",
+              fontSize: isSmallScreen ? "0.9rem" : "1rem"
+            }}
           >
             {snackbarMessage}
+          </Alert>
+        </Snackbar>
+
+        <Snackbar
+          open={showConfirmDelete}
+          autoHideDuration={null}
+          onClose={() => setShowConfirmDelete(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          sx={{
+            marginTop: isSmallScreen ? "25%" : "10%",
+          }}
+        >
+          <Alert
+            severity="warning"
+            sx={{
+              width: isSmallScreen ? "90%" : "400px",
+              fontSize: isSmallScreen ? "0.9rem" : "1rem"
+            }}
+            action={
+              <div className="d-flex gap-2 mt-2">
+                <button
+                  onClick={handleDeleteConfirmation}
+                  className="btn btn-outline-danger btn-sm"
+                  style={{ 
+                    fontSize: isSmallScreen ? "0.8rem" : "0.875rem",
+                    padding: isSmallScreen ? "0.25rem 0.5rem" : "0.3rem 0.6rem"
+                  }}
+                >
+                  Eliminar
+                </button>
+                <button
+                  onClick={() => setShowConfirmDelete(false)}
+                  className="btn btn-outline-secondary btn-sm"
+                  style={{ 
+                    fontSize: isSmallScreen ? "0.8rem" : "0.875rem",
+                    padding: isSmallScreen ? "0.25rem 0.5rem" : "0.3rem 0.6rem"
+                  }}
+                >
+                  Cancelar
+                </button>
+              </div>
+            }
+          >
+            ¿Estás seguro de eliminar este cliente?
           </Alert>
         </Snackbar>
       </div>

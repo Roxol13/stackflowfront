@@ -32,7 +32,7 @@ const ShowProveedores = () => {
   const [proveedorToDelete, setProveedorToDelete] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = isSmallScreen ? 10 : 10;
+  const itemsPerPage = isSmallScreen ? 5 : 10; // Menos items en móviles
 
   useEffect(() => {
     getProveedores();
@@ -144,60 +144,65 @@ const ShowProveedores = () => {
   );
 
   return (
-    <div className="container-fluid show-proveedor-container mt-5 mt-md-5 px-2 px-md-4">
+    <div className="container-fluid show-proveedor-container mt-3 mt-sm-5 px-3 px-sm-4 px-md-5">
       <div className="table-wrapper">
-        <div className="table-title d-flex justify-content-start align-items-center">
+        <div className={`table-title d-flex ${isSmallScreen ? 'flex-column align-items-start gap-3' : 'justify-content-start align-items-center'}`}>
           <h3 className="m-0">Tabla de Proveedores</h3>
+          
           <button
-            className="btn btn-create ms-5"
+            className={`btn btn-create ${isSmallScreen ? 'w-100' : 'ms-5'}`}
             onClick={() => openModal()}
             style={{
               backgroundColor: "#3f2569",
               color: "white",
               padding: "8px 18px",
-              fontSize: "14px",
+              fontSize: isSmallScreen ? "0.9rem" : "0.875rem",
               borderRadius: "22px",
-              width: isSmallScreen ? "100%" : "auto"
             }}
           >
             Añadir Proveedor
           </button>
-          <div className="mb-3 ms-1" style={{ flexGrow: 1 }}></div>
-          <div
-            className="input-group"
-            style={{ width: "400px", marginLeft: "20px" }}
-          >
-            <input
-              type="text"
-              placeholder="Buscar..."
-              className="form-control"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+
+          <div className={`search-container ${isSmallScreen ? 'w-100 mt-2' : 'ms-3'}`}>
+            <div 
+              className="input-group"
               style={{
-                borderRadius: "25px",
-                color: "black",
-                border: "1px solid #6c757d",
-                paddingRight: "40px",
-              }}
-            />
-            <span
-              className="input-group-text"
-              style={{
-                borderRadius: "25px",
-                border: "none",
-                backgroundColor: "white",
-                position: "absolute",
-                right: "10px",
-                top: "50%",
-                transform: "translateY(-50%)",
+                width: isSmallScreen ? "100%" : "350px",
               }}
             >
-              <i className="bi bi-search"></i>
-            </span>
+              <input
+                type="text"
+                placeholder="Buscar..."
+                className="form-control"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                style={{
+                  borderRadius: "25px",
+                  color: "black",
+                  border: "1px solid #6c757d",
+                  paddingRight: "40px",
+                  fontSize: isSmallScreen ? "0.9rem" : "1rem"
+                }}
+              />
+              <span
+                className="input-group-text"
+                style={{
+                  borderRadius: "25px",
+                  border: "none",
+                  backgroundColor: "white",
+                  position: "absolute",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                }}
+              >
+                <i className="bi bi-search"></i>
+              </span>
+            </div>
           </div>
         </div>
         
-        <div className="table-responsive" style={{ overflowX: "auto" }}>
+        <div className="table-responsive mt-3" style={{ overflowX: "auto" }}>
           <table className="table mb-0 custom-table">
             <thead>
               <tr className="table-header-row">
@@ -220,18 +225,28 @@ const ShowProveedores = () => {
                   {!isSmallScreen && <td>{proveedor.direccion}</td>}
                   {!isSmallScreen && <td>{proveedor.razon}</td>}
                   <td>
-                    <div className="d-flex gap-1">
+                    <div className="d-flex gap-2">
                       <button
                         className="btn btn-outline-primary btn-sm"
                         onClick={() => openModal(proveedor, true)}
-                        style={{ minWidth: "30px" }}
+                        style={{ 
+                          minWidth: isSmallScreen ? "36px" : "30px",
+                          padding: isSmallScreen ? "0.5rem" : "0.25rem",
+                          fontSize: isSmallScreen ? "1rem" : "0.875rem"
+                        }}
+                        title="Editar"
                       >
                         <i className="bi bi-pencil"></i>
                       </button>
                       <button
                         className="btn btn-outline-danger btn-sm"
                         onClick={() => deleteProveedor(proveedor.id)}
-                        style={{ minWidth: "30px" }}
+                        style={{ 
+                          minWidth: isSmallScreen ? "36px" : "30px",
+                          padding: isSmallScreen ? "0.5rem" : "0.25rem",
+                          fontSize: isSmallScreen ? "1rem" : "0.875rem"
+                        }}
+                        title="Eliminar"
                       >
                         <i className="bi bi-trash"></i>
                       </button>
@@ -253,6 +268,7 @@ const ShowProveedores = () => {
                 color="secondary"
                 shape="rounded"
                 size={isSmallScreen ? "small" : "medium"}
+                siblingCount={isSmallScreen ? 0 : 1}
               />
             </Stack>
           </div>
@@ -275,14 +291,17 @@ const ShowProveedores = () => {
           autoHideDuration={3000}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           sx={{
-            marginTop: isSmallScreen ? "20%" : "5%",
+            marginTop: isSmallScreen ? "15%" : "5%",
           }}
           onClose={() => setOpenSnackbar(false)}
         >
           <Alert
             onClose={() => setOpenSnackbar(false)}
             severity={snackbarSeverity}
-            sx={{ width: isSmallScreen ? "90%" : "auto" }}
+            sx={{ 
+              width: isSmallScreen ? "90%" : "auto",
+              fontSize: isSmallScreen ? "0.9rem" : "1rem"
+            }}
           >
             {snackbarMessage}
           </Alert>
@@ -294,31 +313,41 @@ const ShowProveedores = () => {
           onClose={() => setShowConfirmDelete(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
           sx={{
-            marginTop: isSmallScreen ? "30%" : "15%",
+            marginTop: isSmallScreen ? "25%" : "10%",
           }}
         >
           <Alert
             severity="warning"
+            sx={{
+              width: isSmallScreen ? "90%" : "400px",
+              fontSize: isSmallScreen ? "0.9rem" : "1rem"
+            }}
             action={
-              <div className="d-flex gap-1">
+              <div className="d-flex gap-2 mt-2">
                 <button
                   onClick={handleDeleteConfirmation}
                   className="btn btn-outline-danger btn-sm"
-                  style={{ fontSize: isSmallScreen ? "12px" : "14px" }}
+                  style={{ 
+                    fontSize: isSmallScreen ? "0.8rem" : "0.875rem",
+                    padding: isSmallScreen ? "0.25rem 0.5rem" : "0.3rem 0.6rem"
+                  }}
                 >
                   Eliminar
                 </button>
                 <button
                   onClick={() => setShowConfirmDelete(false)}
                   className="btn btn-outline-secondary btn-sm"
-                  style={{ fontSize: isSmallScreen ? "12px" : "14px" }}
+                  style={{ 
+                    fontSize: isSmallScreen ? "0.8rem" : "0.875rem",
+                    padding: isSmallScreen ? "0.25rem 0.5rem" : "0.3rem 0.6rem"
+                  }}
                 >
                   Cancelar
                 </button>
               </div>
             }
           >
-            ¿Estás seguro de eliminar este proveedor? Puede estar asociado a un producto.
+            ¿Estás seguro de eliminar este proveedor?
           </Alert>
         </Snackbar>
       </div>
