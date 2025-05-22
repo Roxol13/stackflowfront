@@ -296,7 +296,7 @@ const Login = ({ onLoginSuccess }) => {
                     background: hsl(218, 41%, 15%);
                     background-image: 
                         radial-gradient(800px circle at 0% 0%,
-                            hsl(218, 41%, 35%) 15%,
+                            hsl(218, 41%, 35%) 15%,xxxxxx
                             hsl(218, 41%, 30%) 35%,
                             hsl(218, 41%, 20%) 75%,
                             hsl(218, 41%, 19%) 80%,
@@ -309,7 +309,7 @@ const Login = ({ onLoginSuccess }) => {
                             transparent 100%);
                 }
             `}</style>
-        </Box>
+        </Box> 
     );
 };
 
