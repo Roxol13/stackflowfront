@@ -250,7 +250,7 @@ const ShowDetalleVenta = () => {
                   <td>{detalleVenta.cod_pro}</td>
                   <td>{detalleVenta.nompro}</td>
                   <td>{detalleVenta.cantidad}</td>
-                  <td>{detalleVenta.precio}</td>
+                  <td>{detalleVenta.precio}</td>a
                   <td>{detalleVenta.satisfactionScore}</td>
                   <td>{detalleVenta.fecha}</td>
                 </tr>

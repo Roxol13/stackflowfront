@@ -17,7 +17,7 @@ const Login = ({ onLoginSuccess }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('https://stackflowbackend.onrender.com/api/login', {
+            const response = await fetch('https://stackflowbackend.vercel.app/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

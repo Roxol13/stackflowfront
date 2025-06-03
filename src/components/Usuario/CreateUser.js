@@ -38,7 +38,7 @@ const CreateUser = () => {
             rol
         };
 
-        const response = await fetch('https://stackflowbackend.onrender.com/api/createUser', {
+        const response = await fetch('https://stackflowbackend.vercel.app/api/createUser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

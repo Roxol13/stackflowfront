@@ -308,7 +308,7 @@ const VentaFormTemp = () => {
       const response = await fetch('https://stackflowbackend.onrender.com/ventas/guardar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(ventaDataConEvaluacion)
+        body: JSON.stringify(ventaDataConEvaluacion) 
       });
 
       if (response.status === 200 || response.status === 201) {
