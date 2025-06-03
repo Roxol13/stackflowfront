@@ -2,31 +2,16 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { useNavigate } from 'react-router-dom';
-import { 
-  FormControl, 
-  InputLabel, 
-  OutlinedInput, 
-  InputAdornment, 
-  IconButton, 
-  TextField, 
-  MenuItem,
-  Box,
-  Typography,
-  Button,
-  useMediaQuery,
-  useTheme
-} from '@mui/material';
+import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, TextField, MenuItem } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-
+import { Box } from '@mui/material';
 const CreateUser = () => {
     const navigate = useNavigate();
     const [nombre, setNombre] = useState('');
     const [correo, setCorreo] = useState('');
     const [pass, setPass] = useState('');
     const [rol, setRol] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar la contraseña
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,15 +21,16 @@ const CreateUser = () => {
             correo,
             pass,
             rol
-        };
+        };//holaa
 
-        const response = await fetch('https://stackflowbackend.vercel.app/api/createUser', {
+        const response = await fetch('https://stackflowbackend.onrender.com/api/createUser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(usuario),
         });
+
 
         if (response.ok) {
             Swal.fire({
@@ -60,6 +46,7 @@ const CreateUser = () => {
                 }
             });
 
+            // Limpiar el formulario
             setNombre('');
             setCorreo('');
             setPass('');
@@ -81,152 +68,99 @@ const CreateUser = () => {
         event.preventDefault();
     };
 
+    const handleMouseUpPassword = (event) => {
+        event.preventDefault();
+    };
+
+    // Verificar que los campos estén completos
     const isFormValid = () => {
         return nombre && correo && pass && rol;
     };
 
     return (
-        <Box 
-            className="background-radial-gradient"
-            sx={{
-                minHeight: '100vh',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                py: isSmallScreen ? 2 : 4,
-                px: 2,
-                position: 'relative'
-            }}
-        >
-            {/* Back Button */}
-            <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleClick}
-                sx={{
-                    position: 'absolute',
-                    top: isSmallScreen ? 16 : 24,
-                    right: isSmallScreen ? 16 : 24,
-                    zIndex: 2
-                }}
-            >
+        <section className="background-radial-gradient">
+
+            <button type="button" className="btn btn-secondary position-absolute top-0 end-0 m-3" onClick={handleClick}>
                 Regresar al inicio
-            </Button>
+            </button>
+            {/* Estilos personalizados */}
+            <style jsx>{`
+                html, body {
+                    height: 100%;
+                    margin: 0;
+                    padding: 0;
+                }
 
-            <Box 
-                sx={{
-                    width: '100%',
-                    maxWidth: '1200px',
-                    display: 'flex',
-                    flexDirection: isSmallScreen ? 'column' : 'row',
-                    alignItems: 'center',
-                    gap: isSmallScreen ? 4 : 8,
-                    my: 4
-                }}
-            >
-                {/* Left Column - Welcome Message */}
-                <Box 
-                    sx={{
-                        flex: 1,
-                        textAlign: isSmallScreen ? 'center' : 'left',
-                        color: 'white',
-                        px: isSmallScreen ? 2 : 0
-                    }}
-                >
-                    <Typography 
-                        variant={isSmallScreen ? 'h4' : 'h2'} 
-                        sx={{ 
-                            fontWeight: 'bold',
-                            color: '#e5a60d',
-                            mb: 2
-                        }}
-                    >
-                        STACKFLOW
-                    </Typography>
-                    <Typography 
-                        variant={isSmallScreen ? 'h6' : 'h5'} 
-                        sx={{ 
-                            color: 'hsl(218, 81%, 95%)',
-                            mb: 1
-                        }}
-                    >
-                        El mejor sistema de ventas
-                    </Typography>
-                    <Typography 
-                        variant={isSmallScreen ? 'h5' : 'h4'} 
-                        sx={{ 
-                            color: '#c18cf3',
-                            fontWeight: 'bold'
-                        }}
-                    >
-                        para tu NEGOCIO
-                    </Typography>
-                </Box>
+                .background-radial-gradient {
+                    min-height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: hsl(218, 41%, 15%);
+                    background-image: radial-gradient(800px circle at 0% 0%,
+                        hsl(218, 41%, 35%) 15%,
+                        hsl(218, 41%, 30%) 35%,
+                        hsl(218, 41%, 20%) 75%,
+                        hsl(218, 41%, 19%) 80%,
+                        transparent 100%),
+                        radial-gradient(1250px circle at 100% 100%,
+                        hsl(218, 41%, 45%) 15%,
+                        hsl(218, 41%, 30%) 35%,
+                        hsl(218, 41%, 20%) 75%,
+                        hsl(218, 41%, 19%) 80%,
+                        transparent 100%);
+                }
 
-                {/* Right Column - Form */}
-                <Box 
-                    sx={{ 
-                        flex: 1,
-                        position: 'relative',
-                        maxWidth: isSmallScreen ? '100%' : '500px',
-                        minWidth: isSmallScreen ? 'auto' : '400px'
-                    }}
-                >
-                    {/* Decorative shapes - Hidden on small screens */}
-                    {!isSmallScreen && (
-                        <>
-                            <Box 
-                                sx={{
-                                    position: 'absolute',
-                                    height: '220px',
-                                    width: '220px',
-                                    top: '-60px',
-                                    left: '-130px',
-                                    background: 'radial-gradient(#44006b, #ad1fff)',
-                                    borderRadius: '50%',
-                                    zIndex: 1
-                                }}
-                            />
-                            <Box 
-                                sx={{
-                                    position: 'absolute',
-                                    borderRadius: '38% 62% 63% 37% / 70% 33% 67% 30%',
-                                    bottom: '-60px',
-                                    right: '-90px',
-                                    width: '300px',
-                                    height: '300px',
-                                    background: 'radial-gradient(#44006b, #ad1fff)',
-                                    zIndex: 1
-                                }}
-                            />
-                        </>
-                    )}
+                #radius-shape-1 {
+                    height: 220px;
+                    width: 220px;
+                    top: -60px;
+                    left: -130px;
+                    background: radial-gradient(#44006b, #ad1fff);
+                    overflow: hidden;
+                }
 
-                    {/* Form Container */}
+                #radius-shape-2 {
+                    border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+                    bottom: -60px;
+                    right: -90px;
+                    width: 300px;
+                    height: 300px;
+                    background: radial-gradient(#44006b, #ad1fff);
+                    overflow: hidden;
+                }
+            `}</style>
+
+            <div className="row gx-lg-5 align-items-center mb-5">
+                <div className="col-lg-6 mb-5 mb-lg-0">
+                    <h1 className="my-5 display-5 fw-bold ls-tight" style={{ color: '#e5a60d' }}>
+                        STACKFLOW<br />
+                        <span style={{ color: 'hsl(218, 81%, 95%)' }}>El mejor sistema de ventas</span> <br />
+                        <span style={{ color: '#c18cf3' }}>para tu NEGOCIO</span>
+                    </h1>
+                </div>
+
+                <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
+                    <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong"></div>
+                    <div id="radius-shape-2" className="position-absolute shadow-5-strong"></div>
+
                     <Box
                         sx={{
                             backgroundColor: 'white',
-                            padding: isSmallScreen ? 3 : 4,
+                            padding: 4,
                             borderRadius: 3,
                             boxShadow: 4,
-                            width: '100%',
+                            maxWidth: 500,
+                            mx: 'auto',
+                            my: 5,
                             position: 'relative',
-                            zIndex: 2
+                            zIndex: 1,
                         }}
                     >
-                        <Typography 
-                            variant={isSmallScreen ? 'h5' : 'h4'} 
-                            component="h1" 
-                            gutterBottom 
-                            align="center"
-                            sx={{ mb: 4 }}
-                        >
-                            Crear una cuenta
-                        </Typography>
+                        <form onSubmit={handleSubmit} className="container mt-6">
+                            <h1 className="text-center mb-4">Crear una cuenta</h1>
 
-                        <form onSubmit={handleSubmit}>
-                            <Box sx={{ mb: 3 }}>
+                            <div className="form-outline mb-4">
                                 <TextField
                                     label="Nombre"
                                     variant="outlined"
@@ -234,24 +168,22 @@ const CreateUser = () => {
                                     value={nombre}
                                     onChange={(e) => setNombre(e.target.value)}
                                     fullWidth
-                                    size={isSmallScreen ? 'small' : 'medium'}
                                 />
-                            </Box>
+                            </div>
 
-                            <Box sx={{ mb: 3 }}>
+                            <div className="form-outline mb-4">
                                 <TextField
                                     label="Correo"
                                     variant="outlined"
-                                    type="email"
+                                    type="text"
                                     value={correo}
                                     onChange={(e) => setCorreo(e.target.value)}
                                     fullWidth
-                                    size={isSmallScreen ? 'small' : 'medium'}
                                 />
-                            </Box>
+                            </div>
 
-                            <Box sx={{ mb: 3 }}>
-                                <FormControl variant="outlined" fullWidth size={isSmallScreen ? 'small' : 'medium'}>
+                            <div className="form-outline mb-4">
+                                <FormControl variant="outlined" fullWidth>
                                     <InputLabel htmlFor="outlined-adornment-password">Contraseña</InputLabel>
                                     <OutlinedInput
                                         type={showPassword ? 'text' : 'password'}
@@ -263,6 +195,7 @@ const CreateUser = () => {
                                                     aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                                                     onClick={handleClickShowPassword}
                                                     onMouseDown={handleMouseDownPassword}
+                                                    onMouseUp={handleMouseUpPassword}
                                                     edge="end"
                                                 >
                                                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -272,43 +205,41 @@ const CreateUser = () => {
                                         label="Contraseña"
                                     />
                                 </FormControl>
-                            </Box>
+                            </div>
 
-                            <Box sx={{ mb: 4 }}>
+
+                            <div className="form-outline mb-4">
                                 <TextField
+
                                     select
                                     label="Seleccionar un rol"
                                     value={rol}
                                     onChange={(e) => setRol(e.target.value)}
                                     fullWidth
-                                    size={isSmallScreen ? 'small' : 'medium'}
                                 >
                                     <MenuItem value="" disabled>Roles</MenuItem>
                                     <MenuItem value="Administrador">Administrador</MenuItem>
                                     <MenuItem value="Empleado">Empleado</MenuItem>
                                 </TextField>
-                            </Box>
+                            </div>
 
-                            <Button
+                            <button
                                 type="submit"
-                                variant="contained"
-                                color="primary"
-                                fullWidth
+                                className="btn btn-primary btn-block w-100"
                                 disabled={!isFormValid()}
-                                sx={{
-                                    py: isSmallScreen ? 1 : 1.5,
-                                    fontSize: isSmallScreen ? '0.875rem' : '1rem'
-                                }}
                             >
                                 Registrar
-                            </Button>
+                            </button>
+
                         </form>
                     </Box>
-                </Box>
-            </Box>
 
-            {/* Global Styles */}
-            <style jsx global>{`
+
+                </div>
+            </div>
+
+
+            <style jsx>{`
                 html, body {
                     height: 100%;
                     margin: 0;
@@ -316,23 +247,21 @@ const CreateUser = () => {
                 }
 
                 .background-radial-gradient {
-                    background: hsl(218, 41%, 15%);
-                    background-image: 
-                        radial-gradient(800px circle at 0% 0%,
-                            hsl(218, 41%, 35%) 15%,
-                            hsl(218, 41%, 30%) 35%,
-                            hsl(218, 41%, 20%) 75%,
-                            hsl(218, 41%, 19%) 80%,
-                            transparent 100%),
-                        radial-gradient(1250px circle at 100% 100%,
-                            hsl(218, 41%, 45%) 15%,
-                            hsl(218, 41%, 30%) 35%,
-                            hsl(218, 41%, 20%) 75%,
-                            hsl(218, 41%, 19%) 80%,
-                            transparent 100%);
+                    min-height: 100vh;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background: linear-gradient(to bottom, #0f172a, #1e3a8a); /* azul oscuro degradado */
+                }
+                
+
+                .btn-disabled {
+                    background-color: #cccccc;
+                    color: #666666;
+                    cursor: not-allowed;
                 }
             `}</style>
-        </Box>
+        </section>
     );
 };
 
