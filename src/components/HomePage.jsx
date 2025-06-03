@@ -9,12 +9,12 @@ const HomePage = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     // Simular carga de datos
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 1500);
-        return () => clearTimeout(timer);
-    }, []);
+    //useEffect(() => {
+      //  const timer = setTimeout(() => {
+        //    setIsLoading(false);
+        //}, 1500);
+        //return () => clearTimeout(timer);
+    //S}, []);
 
     const features = [
         {
